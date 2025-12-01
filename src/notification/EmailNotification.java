@@ -6,6 +6,6 @@ public class EmailNotification implements NotificationStrategy {
 
     @Override
     public void send(Customer customer, String message) {
-
+        // stub
     }
 }
