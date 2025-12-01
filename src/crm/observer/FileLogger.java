@@ -1,4 +1,4 @@
 package crm.observer;
 
-public class FileLogger {
+public class FileLogger implements CRMObserver {
 }
