@@ -1,5 +1,5 @@
 package customer;
 
-class RegularCustomer extends Customer {
+public class RegularCustomer extends Customer {
     
 }

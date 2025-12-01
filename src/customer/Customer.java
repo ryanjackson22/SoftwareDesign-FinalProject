@@ -1,5 +1,5 @@
 package customer;
 
-abstract class Customer {
+public abstract class Customer {
 
 }
