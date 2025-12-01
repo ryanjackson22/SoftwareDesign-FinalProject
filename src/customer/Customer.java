@@ -1,5 +1,18 @@
 package customer;
 
-public abstract class Customer {
+import notification.NotificationStrategy;
 
+import java.util.Date;
+
+public abstract class Customer {
+    private String id;
+    private String name;
+    private String email;
+    private String phone;
+    private Date lastContact;
+    private NotificationStrategy preferredContact;
+
+    public void contact(String message) {
+        // stub
+    }
 }
