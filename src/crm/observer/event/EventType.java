@@ -1,4 +1,5 @@
 package crm.observer.event;
 
 public enum EventType {
+    CONTACT_CREATED, CONTACT_UPDATED, CONTACT_DELETED, SALE_MADE, NOTIFICATION_SENT, COMMAND_UNDONE
 }
