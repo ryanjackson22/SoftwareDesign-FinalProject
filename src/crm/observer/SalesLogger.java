@@ -1,4 +1,4 @@
 package crm.observer;
 
-public class SalesLogger {
+public class SalesLogger implements CRMObserver {
 }
