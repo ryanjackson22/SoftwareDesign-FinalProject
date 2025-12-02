@@ -3,13 +3,8 @@ package notification;
 import contact.Contact;
 
 public class NotificationService {
-    private NotificationStrategy strategy;
-
-    public void setStrategy(NotificationStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public void contactCustomer(Contact contact, String message) {
-        // stub
+    public void notifyContact(Contact contact, String message) {
+        NotificationStrategy notificationStrategy = contact.getPreferredNotificationMethod();
+        notificationStrategy.send(contact, message);
     }
 }
