@@ -1,43 +1,64 @@
 package crm.controller;
 
+import contact.Contact;
+import crm.controller.command.CRMCommand;
 import crm.observer.CRMObserver;
+import crm.observer.event.CRMEvent;
+import crm.observer.event.EventType;
+import notification.NotificationService;
+
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class CRMController {
-    private CommandHistory commandHistory = new CommandHistory();
-//    private CommandRepository commandRepository;
-    private List<CRMObserver> observers = new ArrayList<CRMObserver>();
+    private final Stack<CRMCommand> commandHistory = new Stack<CRMCommand>();
+    private final NotificationService notificationService = new NotificationService();
+    private final List<CRMObserver> observers = new ArrayList<CRMObserver>();
+    private CRMCommand createContactCommand;
+    private CRMCommand updateContactCommand;
+    private CRMCommand deleteContactCommand;
+    private CRMCommand makeSaleCommand;
 
-    public void createContact(String data) {
-        // stub
+    public void createContact(Contact contact) {
+        createContactCommand.execute(contact);
+        notifyObservers(EventType.CONTACT_CREATED);
     }
 
-    public void updateContactType(String data) {
-        // stub
+    public void updateContact(Contact contact) {
+        updateContactCommand.execute(contact);
+        notifyObservers(EventType.CONTACT_UPDATED);
     }
 
-    public void updateContactInfo(String data) {
-        // stub
+    public void deleteContact(Contact contact) {
+        deleteContactCommand.execute(contact);
+        notifyObservers(EventType.CONTACT_DELETED);
     }
 
-    public void makeSale(String data) {
-        // stub
+    public void makeSale(Contact contact) {
+        makeSaleCommand.execute(contact);
+        notifyObservers(EventType.SALE_MADE);
     }
 
     public void undo() {
-        // stub
+        commandHistory.pop().undo();
+        notifyObservers(EventType.COMMAND_UNDONE);
+    }
+
+    public void notifyContact(Contact contact, String message) {
+        this.notificationService.notifyContact(contact, message);
+        notifyObservers(EventType.NOTIFICATION_SENT);
     }
 
     public void addObserver(CRMObserver observer) {
-        // stub
+        observers.add(observer);
     }
 
     public void removeObserver(CRMObserver observer) {
-        // stub
+        observers.remove(observer);
     }
 
-    public void notifyObservers() {
-        // stub
+    public void notifyObservers(EventType eventType) {
+        observers.forEach(observer -> observer.onEvent(eventType));
     }
 }

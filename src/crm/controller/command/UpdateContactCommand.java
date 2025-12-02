@@ -3,9 +3,11 @@ package crm.controller.command;
 import contact.Contact;
 import contact.repository.ContactRepository;
 
+import java.util.Stack;
+
 public class UpdateContactCommand implements CRMCommand {
-    ContactRepository contactRepository;
-    Contact previousContactValue;
+    private final ContactRepository contactRepository;
+    private final Stack<Contact> previousContacts = new Stack<>();
 
     public UpdateContactCommand(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
@@ -13,12 +15,12 @@ public class UpdateContactCommand implements CRMCommand {
 
     @Override
     public void execute(Contact contact) {
-        previousContactValue = contact;
+        previousContacts.push(contact);
         contactRepository.updateContact(contact);
     }
 
     @Override
     public void undo() {
-        contactRepository.updateContact(previousContactValue);
+        contactRepository.updateContact(previousContacts.pop());
     }
 }
