@@ -10,9 +10,9 @@ public abstract class Customer {
     private String email;
     private String phone;
     private Date lastContact;
-    private NotificationStrategy preferredContact;
+    private NotificationStrategy preferredContactMethod;
 
     public void contact(String message) {
-        // stub
+        preferredContactMethod.send(this,message);
     }
 }
