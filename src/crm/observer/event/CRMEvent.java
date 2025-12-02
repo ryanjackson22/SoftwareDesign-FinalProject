@@ -3,15 +3,21 @@ package crm.observer.event;
 import java.util.Date;
 
 public class CRMEvent {
-    private EventType eventType;
-    private Date timestamp;
+    private final EventType eventType;
+    private final Date timestamp;
+
+    public CRMEvent(EventType eventType, Date timestamp) {
+        this.eventType = eventType;
+        this.timestamp = timestamp;
+    }
 
     public EventType getEventType() {
         return eventType;
     }
 
     public String toString() {
-        return "";
-        // stub
+        String eventTypeStr = eventType.toString();
+        String timestampStr = timestamp.toString();
+        return String.format("Event Type: %s, Event Time: %s", eventTypeStr, timestampStr);
     }
 }
