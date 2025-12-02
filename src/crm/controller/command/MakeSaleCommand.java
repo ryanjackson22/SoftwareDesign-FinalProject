@@ -1,6 +1,6 @@
 package crm.controller.command;
 
-public class MakeSaleCommand implements Command {
+public class MakeSaleCommand implements CRMCommand {
     @Override
     public void execute() {
 
