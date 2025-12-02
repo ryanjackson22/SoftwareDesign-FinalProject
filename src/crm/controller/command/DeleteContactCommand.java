@@ -5,22 +5,22 @@ import contact.repository.ContactRepository;
 
 import java.util.Stack;
 
-public class CreateContactCommand implements CRMCommand {
+public class DeleteContactCommand implements CRMCommand {
     private final ContactRepository contactRepository;
-    private final Stack<Contact> createdContacts = new Stack<>();
+    private final Stack<Contact> previousContacts = new Stack<>();
 
-    public CreateContactCommand(ContactRepository contactRepository) {
+    public DeleteContactCommand(ContactRepository contactRepository) {
         this.contactRepository = contactRepository;
     }
 
     @Override
     public void execute(Contact contact) {
-        createdContacts.push(contact);
-        contactRepository.createContact(contact);
+        previousContacts.push(contact);
+        contactRepository.deleteContact(contact);
     }
 
     @Override
     public void undo() {
-        contactRepository.deleteContact(createdContacts.pop());
+        contactRepository.createContact(previousContacts.pop());
     }
 }
