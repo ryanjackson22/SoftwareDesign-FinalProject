@@ -12,6 +12,13 @@ public abstract class Customer {
     private Date lastContact;
     private NotificationStrategy preferredContactMethod;
 
+    public Customer(String id, String name, String email, String phone) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+    }
+
     public void contact(String message) {
         preferredContactMethod.send(this,message);
     }
