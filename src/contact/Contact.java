@@ -11,7 +11,7 @@ public abstract class Contact {
     private String email;
     private String phone;
     private Date lastContact;
-    private NotificationStrategy preferredContactMethod;
+    private NotificationStrategy preferredNotificationMethod;
 
     public Contact(String id, String name, String email, String phone) {
         this.id = id;
@@ -23,7 +23,7 @@ public abstract class Contact {
     }
 
     public void contact(String message) {
-        preferredContactMethod.send(this, message);
+        preferredNotificationMethod.send(this, message);
         lastContact = new Date();
     }
 
@@ -67,11 +67,11 @@ public abstract class Contact {
         this.lastContact = lastContact;
     }
 
-    public NotificationStrategy getPreferredContactMethod() {
-        return preferredContactMethod;
+    public NotificationStrategy getPreferredNotificationMethod() {
+        return preferredNotificationMethod;
     }
 
-    public void setPreferredContactMethod(NotificationStrategy preferredContactMethod) {
-        this.preferredContactMethod = preferredContactMethod;
+    public void setPreferredNotificationMethod(NotificationStrategy preferredNotificationMethod) {
+        this.preferredNotificationMethod = preferredNotificationMethod;
     }
 }
