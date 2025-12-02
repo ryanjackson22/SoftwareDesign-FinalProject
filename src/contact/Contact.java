@@ -1,5 +1,6 @@
 package contact;
 
+import notification.EmailNotification;
 import notification.NotificationStrategy;
 
 import java.util.Date;
@@ -17,6 +18,8 @@ public abstract class Contact {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.lastContact = new Date();
+        this.preferredNotificationMethod = new EmailNotification();
     }
 
     public void contact(String message) {
