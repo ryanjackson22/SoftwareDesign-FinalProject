@@ -1,12 +1,12 @@
 package crm.controller.command;
 
-import customer.Customer;
-import customer.factory.CustomerFactory;
-import customer.factory.RegularCustomerFactory;
+import contact.Contact;
+import contact.factory.CustomerFactory;
+import contact.factory.RegularCustomerFactory;
 
 public class CreateContactCommand implements CRMCommand {
     @Override
-    public void execute(Customer customer) {
+    public void execute(Contact contact) {
         CustomerFactory customerFactory = new RegularCustomerFactory();
     }
 

@@ -1,13 +1,13 @@
 package notification;
 
-import customer.Customer;
+import contact.Contact;
 
 public class PushNotification implements NotificationStrategy {
     @Override
-    public void send(Customer customer, String message) {
+    public void send(Contact contact, String message) {
         System.out.println(
             "Sending push notification." +
-            "  Customer: " + customer.getName() +
+            "  Customer: " + contact.getName() +
             "  Message: " + message
         );
     }

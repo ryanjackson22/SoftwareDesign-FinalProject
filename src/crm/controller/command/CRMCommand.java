@@ -1,8 +1,8 @@
 package crm.controller.command;
 
-import customer.Customer;
+import contact.Contact;
 
 public interface CRMCommand {
-    public void execute(Customer customer);
+    public void execute(Contact contact);
     public void undo();
 }

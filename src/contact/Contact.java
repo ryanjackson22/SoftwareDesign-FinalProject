@@ -1,10 +1,10 @@
-package customer;
+package contact;
 
 import notification.NotificationStrategy;
 
 import java.util.Date;
 
-public abstract class Customer {
+public abstract class Contact {
     private String id;
     private String name;
     private String email;
@@ -12,7 +12,7 @@ public abstract class Customer {
     private Date lastContact;
     private NotificationStrategy preferredContactMethod;
 
-    public Customer(String id, String name, String email, String phone) {
+    public Contact(String id, String name, String email, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -20,7 +20,8 @@ public abstract class Customer {
     }
 
     public void contact(String message) {
-        preferredContactMethod.send(this,message);
+        preferredContactMethod.send(this, message);
+        lastContact = new Date();
     }
 
     public String getId() {

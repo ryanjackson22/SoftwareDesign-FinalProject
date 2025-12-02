@@ -1,7 +1,7 @@
 package notification;
 
-import customer.Customer;
+import contact.Contact;
 
 public interface NotificationStrategy {
-    public void send(Customer customer, String message);
+    public void send(Contact contact, String message);
 }

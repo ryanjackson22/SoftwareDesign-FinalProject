@@ -1,6 +1,6 @@
 package notification;
 
-import customer.Customer;
+import contact.Contact;
 
 public class NotificationService {
     private NotificationStrategy strategy;
@@ -9,7 +9,7 @@ public class NotificationService {
         this.strategy = strategy;
     }
 
-    public void contactCustomer(Customer customer, String message) {
+    public void contactCustomer(Contact contact, String message) {
         // stub
     }
 }
