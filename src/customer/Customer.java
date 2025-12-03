@@ -1,6 +1,7 @@
 package customer;
 
 import notification.NotificationStrategy;
+import notification.SMSNotification;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ public abstract class Customer {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.preferredContactMethod = new SMSNotification();
     }
 
     public void contact(String message) {
@@ -69,21 +71,5 @@ public abstract class Customer {
 
     public void setPreferredContactMethod(NotificationStrategy preferredContactMethod) {
         this.preferredContactMethod = preferredContactMethod;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 }

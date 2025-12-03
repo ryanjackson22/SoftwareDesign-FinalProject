@@ -6,8 +6,8 @@ import customer.factory.RegularCustomerFactory;
 
 public class CreateContactCommand implements CRMCommand {
     @Override
-    public void execute(Customer customer) {
-        CustomerFactory customerFactory = new RegularCustomerFactory();
+    public void execute() {
+
     }
 
     @Override
