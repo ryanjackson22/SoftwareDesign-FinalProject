@@ -1,11 +1,11 @@
 package crm.controller;
 
-import crm.controller.command.Command;
+import crm.controller.command.CRMCommand;
 
 import java.util.Stack;
 
-public class CommandHistory implements Command {
-    private Stack<Command> history = new Stack<Command>();
+public class CommandHistory implements CRMCommand {
+    private Stack<CRMCommand> history = new Stack<CRMCommand>();
 
 
     @Override
