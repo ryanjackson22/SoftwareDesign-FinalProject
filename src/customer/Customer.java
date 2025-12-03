@@ -13,7 +13,7 @@ public abstract class Customer {
     private NotificationStrategy preferredContact;
 
     public void contact(String message) {
-        // stub
+        preferredContact.send(this, message);
     }
 
     public String getEmail() {
