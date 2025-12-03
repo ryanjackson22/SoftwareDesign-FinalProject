@@ -1,6 +1,6 @@
 package crm.controller.command;
 
-public class UpdateContactInfoCommand implements Command {
+public class UpdateContactInfoCommand implements CRMCommand {
     @Override
     public void execute() {
 
