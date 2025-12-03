@@ -1,5 +1,7 @@
 package customer;
 
 public class RegularCustomer extends Customer {
-    // stub
+    public RegularCustomer(String id, String name, String email, String phone) {
+        super(id, name, email, phone);
+    }
 }
