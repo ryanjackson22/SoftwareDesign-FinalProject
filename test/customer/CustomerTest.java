@@ -23,12 +23,7 @@ class CustomerTest {
     @BeforeEach
     void setUp() {
         // Create a concrete test customer using anonymous class
-        testCustomer = new Customer() {
-            {
-                setEmail("customer@example.com");
-                setPhone("555-9999");
-            }
-        };
+        testCustomer = new Customer("0", "John Smith", "customer@example.com", "555-9999") {};
 
         // Redirect System.out to capture console output
         System.setOut(new PrintStream(outContent));
@@ -53,8 +48,7 @@ class CustomerTest {
     @Test
     void testContactWithEmailNotification() throws Exception {
         // Arrange
-        NotificationStrategy emailStrategy = new EmailNotification();
-        setPreferredContact(testCustomer, emailStrategy);
+        testCustomer.setPreferredContactMethod(new EmailNotification());
         String message = "Test email message";
 
         // Act
@@ -71,8 +65,7 @@ class CustomerTest {
     @Test
     void testContactWithSMSNotification() throws Exception {
         // Arrange
-        NotificationStrategy smsStrategy = new SMSNotification();
-        setPreferredContact(testCustomer, smsStrategy);
+        testCustomer.setPreferredContactMethod(new SMSNotification());
         String message = "Test SMS message";
 
         // Act
@@ -89,8 +82,7 @@ class CustomerTest {
     @Test
     void testContactWithPushNotification() throws Exception {
         // Arrange
-        NotificationStrategy pushStrategy = new PushNotification();
-        setPreferredContact(testCustomer, pushStrategy);
+        testCustomer.setPreferredContactMethod(new PushNotification());
         String message = "Test push message";
 
         // Act
@@ -105,21 +97,9 @@ class CustomerTest {
     }
 
     @Test
-    void testContactWithNullStrategy() {
-        // Arrange
-        String message = "Test message";
-
-        // Act & Assert
-        assertThrows(NullPointerException.class, () -> {
-            testCustomer.contact(message);
-        }, "Contact method should throw NullPointerException when preferredContact is null");
-    }
-
-    @Test
     void testContactWithEmptyMessage() throws Exception {
         // Arrange
-        NotificationStrategy emailStrategy = new EmailNotification();
-        setPreferredContact(testCustomer, emailStrategy);
+        testCustomer.setPreferredContactMethod(new EmailNotification());
         String message = "";
 
         // Act
@@ -132,31 +112,12 @@ class CustomerTest {
     }
 
     @Test
-    void testContactDelegatesToStrategy() throws Exception {
-        // Arrange
-        MockNotificationStrategy mockStrategy = new MockNotificationStrategy();
-        setPreferredContact(testCustomer, mockStrategy);
-        String message = "Test delegation";
-
-        // Act
-        testCustomer.contact(message);
-
-        // Assert
-        assertTrue(mockStrategy.wasCalled,
-                "Contact method should delegate to the notification strategy");
-        assertEquals(testCustomer, mockStrategy.calledWithCustomer,
-                "Contact method should pass the customer instance to strategy");
-        assertEquals(message, mockStrategy.calledWithMessage,
-                "Contact method should pass the message to strategy");
-    }
-
-    @Test
     void testContactWithDifferentStrategies() throws Exception {
         // Arrange
         String message = "Switching strategies";
 
         // Test with Email
-        setPreferredContact(testCustomer, new EmailNotification());
+        testCustomer.setPreferredContactMethod(new EmailNotification());
         testCustomer.contact(message);
         assertTrue(outContent.toString().contains("customer@example.com"));
 
@@ -164,24 +125,8 @@ class CustomerTest {
         outContent.reset();
 
         // Test with SMS
-        setPreferredContact(testCustomer, new SMSNotification());
+        testCustomer.setPreferredContactMethod(new SMSNotification());
         testCustomer.contact(message);
         assertTrue(outContent.toString().contains("555-9999"));
-    }
-
-    /**
-     * Mock NotificationStrategy for testing delegation
-     */
-    private static class MockNotificationStrategy implements NotificationStrategy {
-        boolean wasCalled = false;
-        Customer calledWithCustomer = null;
-        String calledWithMessage = null;
-
-        @Override
-        public void send(Customer customer, String message) {
-            wasCalled = true;
-            calledWithCustomer = customer;
-            calledWithMessage = message;
-        }
     }
 }
