@@ -5,7 +5,7 @@ import customer.RegularCustomer;
 
 public class RegularCustomerFactory implements CustomerFactory {
     @Override
-    public Customer createCustomer(String id, String name, String email, String phone) {
-        return new RegularCustomer(id, name, email, phone);
+    public Customer createCustomer(String name, String email, String phone) {
+        return new RegularCustomer(name, email, phone);
     }
 }

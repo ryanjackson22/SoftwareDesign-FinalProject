@@ -22,8 +22,8 @@ class CustomerTest {
 
     @BeforeEach
     void setUp() {
-        // Create a concrete test customer using anonymous class
-        testCustomer = new Customer("0", "John Smith", "customer@example.com", "555-9999") {};
+        // Create a concrete test customer using RegularCustomer
+        testCustomer = new RegularCustomer("John Smith", "customer@example.com", "555-9999");
 
         // Redirect System.out to capture console output
         System.setOut(new PrintStream(outContent));
@@ -128,5 +128,80 @@ class CustomerTest {
         testCustomer.setPreferredContactMethod(new SMSNotification());
         testCustomer.contact(message);
         assertTrue(outContent.toString().contains("555-9999"));
+    }
+
+    @Test
+    void testToStringFormat() {
+        // Arrange & Act
+        String result = testCustomer.toString();
+
+        // Assert
+        assertTrue(result.startsWith("{"), "toString should start with '{'");
+        assertTrue(result.endsWith("}"), "toString should end with '}'");
+        assertTrue(result.contains("Name: John Smith"), "toString should contain customer name");
+        assertTrue(result.contains("Email: customer@example.com"), "toString should contain customer email");
+        assertTrue(result.contains("Phone: 555-9999"), "toString should contain customer phone");
+        assertTrue(result.contains("ID:"), "toString should contain ID field");
+    }
+
+    @Test
+    void testToStringWithDifferentCustomerTypes() {
+        // Test with VIPCustomer
+        Customer vipCustomer = new VIPCustomer("Jane Doe", "jane@vip.com", "(800)123-4567");
+        String vipResult = vipCustomer.toString();
+        assertTrue(vipResult.contains("Name: Jane Doe"));
+        assertTrue(vipResult.contains("Email: jane@vip.com"));
+        assertTrue(vipResult.contains("Phone: (800)123-4567"));
+        assertTrue(vipResult.contains("ID:"));
+
+        // Test with LeadCustomer
+        Customer leadCustomer = new LeadCustomer("Bob Smith", "bob@lead.com", "555-1111");
+        String leadResult = leadCustomer.toString();
+        assertTrue(leadResult.contains("Name: Bob Smith"));
+        assertTrue(leadResult.contains("Email: bob@lead.com"));
+        assertTrue(leadResult.contains("Phone: 555-1111"));
+        assertTrue(leadResult.contains("ID:"));
+    }
+
+    @Test
+    void testToStringContainsAllRequiredFields() {
+        // Arrange
+        Customer customer = new RegularCustomer("Test User", "test@example.com", "(555)000-0000");
+
+        // Act
+        String result = customer.toString();
+
+        // Assert - verify all four fields are present in correct format
+        assertTrue(result.matches(".*\\{ Name: .+, ID: \\d+, Email: .+, Phone: .+ \\}.*"),
+                "toString should match format: { Name: X, ID: Y, Email: Z, Phone: W }");
+    }
+
+    @Test
+    void testToStringIncrementsCustomerId() {
+        // Arrange
+        Customer customer1 = new RegularCustomer("User One", "user1@test.com", "111-1111");
+        Customer customer2 = new RegularCustomer("User Two", "user2@test.com", "222-2222");
+
+        // Act
+        String result1 = customer1.toString();
+        String result2 = customer2.toString();
+
+        // Assert - customer2's ID should be greater than customer1's ID
+        int id1 = extractIdFromToString(result1);
+        int id2 = extractIdFromToString(result2);
+        assertTrue(id2 > id1, "Second customer should have a higher ID than first customer");
+    }
+
+    /**
+     * Helper method to extract ID from toString output
+     */
+    private int extractIdFromToString(String toStringResult) {
+        // Extract the ID value from the format "{ Name: X, ID: Y, Email: Z, Phone: W }"
+        String[] parts = toStringResult.split("ID: ");
+        if (parts.length > 1) {
+            String idPart = parts[1].split(",")[0].trim();
+            return Integer.parseInt(idPart);
+        }
+        return -1;
     }
 }
