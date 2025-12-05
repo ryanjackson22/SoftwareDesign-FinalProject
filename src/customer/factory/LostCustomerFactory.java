@@ -5,7 +5,7 @@ import customer.LostCustomer;
 
 public class LostCustomerFactory implements CustomerFactory {
     @Override
-    public Customer createCustomer(String id, String name, String email, String phone) {
-        return new LostCustomer(id, name, email, phone);
+    public Customer createCustomer(String name, String email, String phone) {
+        return new LostCustomer(name, email, phone);
     }
 }

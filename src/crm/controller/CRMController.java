@@ -1,16 +1,22 @@
 package crm.controller;
 
 import crm.observer.CRMObserver;
+import customer.Customer;
+
 import java.util.List;
 import java.util.ArrayList;
 
 public class CRMController {
     private CommandHistory commandHistory = new CommandHistory();
-//    private CommandRepository commandRepository;
+    private List<Customer> customers = new ArrayList<Customer>();
     private List<CRMObserver> observers = new ArrayList<CRMObserver>();
 
-    public void createContact(String data) {
-        // stub
+    public void createContact(Customer customer) {
+        customers.add(customer);
+    }
+
+    public void deleteContact(Customer customer) {
+        customers.remove(customer);
     }
 
     public void updateContactType(String data) {
