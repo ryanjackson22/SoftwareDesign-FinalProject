@@ -78,4 +78,10 @@ public abstract class Customer {
         currentID++;
         return currentID;
     }
+
+    @Override
+    public String toString() {
+        return String.format("{ Name: %s, ID: %d, Email: %s, Phone: %s }", name, id, email, phone);
+    }
+
 }

@@ -26,6 +26,12 @@ public class ConsoleCRM {
             System.out.println("3. Delete Contact");
             System.out.println("4. Search Contact");
             input = scanner.nextLine();
+
+            clear();
+            if (input.equals("1")) {
+                crm.createContact();
+            }
+            crm.printCustomers();
         }
 
         scanner.close();
