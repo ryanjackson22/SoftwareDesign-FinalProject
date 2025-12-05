@@ -31,6 +31,7 @@ public class ConsoleCRM {
             if (input.equals("1")) {
                 crm.createContact();
             }
+
             crm.printCustomers();
         }
 

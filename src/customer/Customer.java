@@ -7,18 +7,22 @@ import java.util.Date;
 
 public abstract class Customer {
     public static int currentID = 64000;
-    private int id;
+
+    private final int id;
     private String name;
     private String email;
     private String phone;
     private Date lastContact;
     private NotificationStrategy preferredContactMethod;
 
+    public abstract String toString();
+
     public Customer(String name, String email, String phone) {
         this.id = assignCustomerId();
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.lastContact = null;
         this.preferredContactMethod = new SMSNotification();
     }
 
@@ -28,10 +32,6 @@ public abstract class Customer {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -78,10 +78,4 @@ public abstract class Customer {
         currentID++;
         return currentID;
     }
-
-    @Override
-    public String toString() {
-        return String.format("{ Name: %s, ID: %d, Email: %s, Phone: %s }", name, id, email, phone);
-    }
-
 }
