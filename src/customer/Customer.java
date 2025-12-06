@@ -6,18 +6,23 @@ import notification.SMSNotification;
 import java.util.Date;
 
 public abstract class Customer {
-    private String id;
+    public static int currentID = 64000;
+
+    private final int id;
     private String name;
     private String email;
     private String phone;
     private Date lastContact;
     private NotificationStrategy preferredContactMethod;
 
-    public Customer(String id, String name, String email, String phone) {
-        this.id = id;
+    public abstract String toString();
+
+    public Customer(String name, String email, String phone) {
+        this.id = assignCustomerId();
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.lastContact = null;
         this.preferredContactMethod = new SMSNotification();
     }
 
@@ -25,12 +30,8 @@ public abstract class Customer {
         preferredContactMethod.send(this,message);
     }
 
-    public String getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -71,5 +72,10 @@ public abstract class Customer {
 
     public void setPreferredContactMethod(NotificationStrategy preferredContactMethod) {
         this.preferredContactMethod = preferredContactMethod;
+    }
+
+    private int assignCustomerId() {
+        currentID++;
+        return currentID;
     }
 }

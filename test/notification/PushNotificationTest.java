@@ -1,6 +1,7 @@
 package notification;
 
 import customer.Customer;
+import customer.RegularCustomer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +23,7 @@ class PushNotificationTest {
         pushNotification = new PushNotification();
 
         // Create a test customer using anonymous class
-        testCustomer = new Customer("0", "John Smith", "johnsmith@test.com", "(111)555-5555") {
+        testCustomer = new RegularCustomer("John Smith", "johnsmith@test.com", "(111)555-5555") {
             {
                 setEmail("test@example.com");
                 setPhone("555-1234");

@@ -8,4 +8,7 @@ import java.util.Stack;
 public class CommandHistory {
     private Stack<CRMCommand> history = new Stack<CRMCommand>();
 
+    public void lastCommand(CRMCommand command) {
+        history.push(command);
+    }
 }
