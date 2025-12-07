@@ -1,9 +1,9 @@
 package crm.observer.event;
 
 public enum EventType {
-    CONTACT_CREATED("Contact Created"),
-    CONTACT_UPDATED("Contact Updated"),
-    CONTACT_DELETED("Contact Deleted"),
+    CUSTOMER_CREATED("Customer Created"),
+    CUSTOMER_UPDATED("Customer Updated"),
+    CUSTOMER_DELETED("Customer Deleted"),
     SALE_MADE("Sale Made"),
     NOTIFICATION_SENT("Notification Sent"),
     COMMAND_UNDONE("Command Undone"),
