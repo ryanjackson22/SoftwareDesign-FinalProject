@@ -6,7 +6,8 @@ public enum EventType {
     CONTACT_DELETED("Contact Deleted"),
     SALE_MADE("Sale Made"),
     NOTIFICATION_SENT("Notification Sent"),
-    COMMAND_UNDONE("Command Undone"),;
+    COMMAND_UNDONE("Command Undone"),
+    NO_EVENT("No Event");
 
     private final String eventTypeStr;
 
