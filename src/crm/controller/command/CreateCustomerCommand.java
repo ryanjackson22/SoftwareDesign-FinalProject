@@ -15,7 +15,7 @@ public class CreateCustomerCommand implements CRMCommand {
     private final EventType eventType = EventType.CUSTOMER_CREATED;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> createdCustomers;
+    private final Stack<Customer> createdCustomers = new Stack<>();
 
     public CreateCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;

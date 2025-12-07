@@ -12,7 +12,7 @@ public class DeleteCustomerCommand implements CRMCommand {
     private final EventType eventType = EventType.CUSTOMER_DELETED;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> deletedCustomers;
+    private Stack<Customer> deletedCustomers = new Stack<>();
 
     public DeleteCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;

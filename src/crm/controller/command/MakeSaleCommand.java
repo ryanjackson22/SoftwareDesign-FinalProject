@@ -12,7 +12,7 @@ public class MakeSaleCommand implements CRMCommand {
     private final EventType eventType = EventType.SALE_MADE;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> customerSales;
+    private Stack<Customer> customerSales = new Stack<>();
 
     public MakeSaleCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
