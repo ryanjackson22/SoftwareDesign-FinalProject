@@ -31,6 +31,7 @@ public class UpdateCustomerCommand implements CRMCommand {
         System.out.println("1. Name");
         System.out.println("2. Email");
         System.out.println("3. Phone Number");
+        System.out.print("Your Choice: ");
         String toChange = scanner.nextLine();
 
         switch (toChange) {

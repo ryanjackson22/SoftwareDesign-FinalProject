@@ -28,6 +28,7 @@ public class CreateCustomerCommand implements CRMCommand {
         System.out.println("1. Lead Customer");
         System.out.println("2. Regular Customer");
         System.out.println("3. VIP Customer");
+        System.out.print("Your Choice: ");
         String customerType = scanner.nextLine();
 
         System.out.println();
