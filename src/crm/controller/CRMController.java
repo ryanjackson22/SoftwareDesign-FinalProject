@@ -41,20 +41,17 @@ public class CRMController {
     }
 
     public void addObserver(CRMObserver observer) {
-        // stub
+        observers.add(observer);
     }
 
     public void removeObserver(CRMObserver observer) {
-        // stub
+        observers.remove(observer);
     }
 
-    public void notifyObservers() {
-        // stub
-    }
-
-    public void printCustomers() {
-        for (Customer customer : customers) {
-            System.out.println(customer.toString());
+    public void notifyObservers(EventType eventType) {
+        for (CRMObserver observer : observers) {
+            observer.onEvent(eventType);
         }
     }
+
 }
