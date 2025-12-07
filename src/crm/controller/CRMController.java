@@ -11,10 +11,10 @@ import java.util.Stack;
 public class CRMController {
     private final Stack<CRMCommand> commandHistory = new Stack<>();
     private final List<CRMObserver> observers = new ArrayList<>();
-    private List<CRMCommand> commands;
+    private final List<CRMCommand> commands = new ArrayList<>();
 
     public void addCommand(CRMCommand command) {
-        commandHistory.push(command);
+        commands.add(command);
     }
 
     public List<String> getCommandListing() {
