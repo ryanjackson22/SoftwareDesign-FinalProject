@@ -7,6 +7,6 @@ public class VIPCustomer extends Customer {
 
     @Override
     public String toString() {
-        return String.format("{ Name: %s, ID: %d, Email: %s, Phone: %s }", getName(), getId(), getEmail(), getPhone());
+        return String.format("Name: %s, ID: %d, Email: %s, Phone: %s", getName(), getId(), getEmail(), getPhone());
     }
 }
