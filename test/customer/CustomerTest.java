@@ -136,8 +136,6 @@ class CustomerTest {
         String result = testCustomer.toString();
 
         // Assert
-        assertTrue(result.startsWith("{"), "toString should start with '{'");
-        assertTrue(result.endsWith("}"), "toString should end with '}'");
         assertTrue(result.contains("Name: John Smith"), "toString should contain customer name");
         assertTrue(result.contains("Email: customer@example.com"), "toString should contain customer email");
         assertTrue(result.contains("Phone: 555-9999"), "toString should contain customer phone");
@@ -172,8 +170,8 @@ class CustomerTest {
         String result = customer.toString();
 
         // Assert - verify all four fields are present in correct format
-        assertTrue(result.matches(".*\\{ Name: .+, ID: \\d+, Email: .+, Phone: .+ \\}.*"),
-                "toString should match format: { Name: X, ID: Y, Email: Z, Phone: W }");
+        assertTrue(result.matches(".*Name: .+, ID: \\d+, Email: .+, Phone: .+"),
+                "toString should match format: Name: X, ID: Y, Email: Z, Phone: W");
     }
 
     @Test

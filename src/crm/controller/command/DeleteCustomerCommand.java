@@ -7,14 +7,14 @@ import repository.CustomerRepository;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class MakeSaleCommand implements CRMCommand {
-    private final String name = "Make Sale";
-    private final EventType eventType = EventType.SALE_MADE;
+public class DeleteCustomerCommand implements CRMCommand {
+    private final String name = "Delete Customer";
+    private final EventType eventType = EventType.CUSTOMER_DELETED;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> customerSales = new Stack<>();
+    private Stack<Customer> deletedCustomers = new Stack<>();
 
-    public MakeSaleCommand(CustomerRepository customerRepository) {
+    public DeleteCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
@@ -24,15 +24,15 @@ public class MakeSaleCommand implements CRMCommand {
         System.out.println("Enter Customer Id: ");
         int customerId = Integer.parseInt(scanner.nextLine());
 
-        Customer saleCustomer = customerRepository.getCustomerFromId(customerId);
-        customerSales.push(saleCustomer);
-        System.out.println("Made sale with " + saleCustomer.getName());
+        Customer customerToDelete = customerRepository.getCustomerFromId(customerId);
+
+        deletedCustomers.push(customerToDelete);
+        customerRepository.deleteCustomer(customerToDelete);
     }
 
     @Override
     public void undo() {
-        Customer saleCustomer = customerSales.pop();
-        System.out.println("Unmade sale with " + saleCustomer.getName());
+        customerRepository.createCustomer(deletedCustomers.pop());
     }
 
     @Override

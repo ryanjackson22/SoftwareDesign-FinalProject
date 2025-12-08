@@ -1,68 +1,59 @@
 package crm.controller;
 
 import crm.controller.command.CRMCommand;
-import crm.controller.command.CreateContactCommand;
 import crm.observer.CRMObserver;
-import customer.Customer;
-import customer.LeadCustomer;
-import customer.RegularCustomer;
-import customer.VIPCustomer;
+import crm.observer.event.EventType;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Stack;
 
 public class CRMController {
-    private CommandHistory commandHistory = new CommandHistory();
-    private List<Customer> customers = new ArrayList<Customer>();
-    private List<CRMObserver> observers = new ArrayList<CRMObserver>();
+    private final Stack<CRMCommand> commandHistory = new Stack<>();
+    private final List<CRMObserver> observers = new ArrayList<>();
+    private final List<CRMCommand> commands = new ArrayList<>();
 
-    public void createContact(Customer customer) {
-        customers.add(customer);
+    public void addCommand(CRMCommand command) {
+        commands.add(command);
     }
 
-    public void createContact() {
-        CRMCommand createContact = new CreateContactCommand();
-        createContact.execute();
+    public List<String> getCommandListing() {
+        List<String> commandNames = new ArrayList<>();
 
-        commandHistory.lastCommand(createContact);
+        for (CRMCommand command : commands) {
+            commandNames.add(command.getName());
+        }
+
+        return commandNames;
     }
 
-    public void deleteContact(Customer customer) {
-        customers.remove(customer);
+    public void executeCommand(int slot) {
+        CRMCommand command = commands.get(slot);
+
+        commandHistory.push(command);
+        command.execute();
+        notifyObservers(command.getEventType());
     }
 
-    public void updateContactType(String data) {
-        // stub
-    }
+    public void undoCommand() {
+        if (commandHistory.isEmpty()) { return; }
 
-    public void updateContactInfo(String data) {
-        // stub
-    }
-
-    public void makeSale(String data) {
-        // stub
-    }
-
-    public void undo() {
-        // stub
+        commandHistory.pop().undo();
+        notifyObservers(EventType.COMMAND_UNDONE);
     }
 
     public void addObserver(CRMObserver observer) {
-        // stub
+        observers.add(observer);
     }
 
     public void removeObserver(CRMObserver observer) {
-        // stub
+        observers.remove(observer);
     }
 
-    public void notifyObservers() {
-        // stub
-    }
-
-    public void printCustomers() {
-        for (Customer customer : customers) {
-            System.out.println(customer.toString());
+    public void notifyObservers(EventType eventType) {
+        for (CRMObserver observer : observers) {
+            observer.onEvent(eventType);
         }
     }
+
 }
