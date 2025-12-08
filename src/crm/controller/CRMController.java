@@ -36,6 +36,8 @@ public class CRMController {
     }
 
     public void undoCommand() {
+        if (commandHistory.isEmpty()) { return; }
+
         commandHistory.pop().undo();
         notifyObservers(EventType.COMMAND_UNDONE);
     }
