@@ -35,11 +35,13 @@ public class ConsoleCRM {
         CRMCommand updateCustomerCommand = new UpdateCustomerCommand(customerRepository);
         CRMCommand deleteCustomerCommand = new DeleteCustomerCommand(customerRepository);
         CRMCommand makeSaleCommand = new MakeSaleCommand(customerRepository);
+        CRMCommand contactCustomerCommand = new ContactCustomerCommand(customerRepository);
 
         crm.addCommand(createCustomerCommand);
         crm.addCommand(updateCustomerCommand);
         crm.addCommand(deleteCustomerCommand);
         crm.addCommand(makeSaleCommand);
+        crm.addCommand(contactCustomerCommand);
 
         while (true) {
             System.out.println("========= CRM Commands ===========");
