@@ -2,6 +2,7 @@ package crm.controller;
 
 import crm.controller.command.CRMCommand;
 import crm.observer.CRMObserver;
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,14 +72,19 @@ class CRMControllerTest {
 
     // Mock observer for testing
     private static class MockObserver implements CRMObserver {
-        private final List<EventType> receivedEvents = new ArrayList<>();
+        private final List<CRMEvent> receivedEvents = new ArrayList<>();
 
         @Override
         public void onEvent(EventType eventType) {
-            receivedEvents.add(eventType);
+//            receivedEvents.add(eventType);
         }
 
-        public List<EventType> getReceivedEvents() {
+        @Override
+        public void onEvent(CRMEvent crmEvent) {
+            receivedEvents.add(crmEvent);
+        }
+
+        public List<CRMEvent> getReceivedEvents() {
             return new ArrayList<>(receivedEvents);
         }
 
@@ -296,7 +302,7 @@ class CRMControllerTest {
 
         // Assert
         assertEquals(1, observer.getEventCount(), "Observer should receive one event");
-        assertEquals(EventType.CUSTOMER_CREATED, observer.getReceivedEvents().get(0));
+        assertEquals(EventType.CUSTOMER_CREATED, observer.getReceivedEvents().get(0).getEventType());
     }
 
     @Test
@@ -318,9 +324,9 @@ class CRMControllerTest {
         assertEquals(1, observer1.getEventCount(), "First observer should receive event");
         assertEquals(1, observer2.getEventCount(), "Second observer should receive event");
         assertEquals(1, observer3.getEventCount(), "Third observer should receive event");
-        assertEquals(EventType.SALE_MADE, observer1.getReceivedEvents().get(0));
-        assertEquals(EventType.SALE_MADE, observer2.getReceivedEvents().get(0));
-        assertEquals(EventType.SALE_MADE, observer3.getReceivedEvents().get(0));
+        assertEquals(EventType.SALE_MADE, observer1.getReceivedEvents().get(0).getEventType());
+        assertEquals(EventType.SALE_MADE, observer2.getReceivedEvents().get(0).getEventType());
+        assertEquals(EventType.SALE_MADE, observer3.getReceivedEvents().get(0).getEventType());
     }
 
     @Test
@@ -361,10 +367,10 @@ class CRMControllerTest {
 
         // Assert
         assertEquals(3, observer.getEventCount(), "Observer should receive three events");
-        List<EventType> events = observer.getReceivedEvents();
-        assertEquals(EventType.CUSTOMER_CREATED, events.get(0));
-        assertEquals(EventType.CUSTOMER_UPDATED, events.get(1));
-        assertEquals(EventType.SALE_MADE, events.get(2));
+        List<CRMEvent> events = observer.getReceivedEvents();
+        assertEquals(EventType.CUSTOMER_CREATED, events.get(0).getEventType());
+        assertEquals(EventType.CUSTOMER_UPDATED, events.get(1).getEventType());
+        assertEquals(EventType.SALE_MADE, events.get(2).getEventType());
     }
 
     @Test
@@ -381,9 +387,9 @@ class CRMControllerTest {
 
         // Assert
         assertEquals(2, observer.getEventCount(), "Observer should receive two events");
-        List<EventType> events = observer.getReceivedEvents();
-        assertEquals(EventType.CUSTOMER_CREATED, events.get(0), "First event should be from execution");
-        assertEquals(EventType.COMMAND_UNDONE, events.get(1), "Second event should be undo");
+        List<CRMEvent> events = observer.getReceivedEvents();
+        assertEquals(EventType.CUSTOMER_CREATED, events.get(0).getEventType(), "First event should be from execution");
+        assertEquals(EventType.COMMAND_UNDONE, events.get(1).getEventType(), "Second event should be undo");
     }
 
     @Test
@@ -428,12 +434,12 @@ class CRMControllerTest {
 
         // Verify observer received all events
         assertEquals(5, observer.getEventCount());
-        List<EventType> events = observer.getReceivedEvents();
-        assertEquals(EventType.CUSTOMER_CREATED, events.get(0));
-        assertEquals(EventType.CUSTOMER_UPDATED, events.get(1));
-        assertEquals(EventType.CUSTOMER_DELETED, events.get(2));
-        assertEquals(EventType.COMMAND_UNDONE, events.get(3));
-        assertEquals(EventType.COMMAND_UNDONE, events.get(4));
+        List<CRMEvent> events = observer.getReceivedEvents();
+        assertEquals(EventType.CUSTOMER_CREATED, events.get(0).getEventType());
+        assertEquals(EventType.CUSTOMER_UPDATED, events.get(1).getEventType());
+        assertEquals(EventType.CUSTOMER_DELETED, events.get(2).getEventType());
+        assertEquals(EventType.COMMAND_UNDONE, events.get(3).getEventType());
+        assertEquals(EventType.COMMAND_UNDONE, events.get(4).getEventType());
     }
 
     @Test
