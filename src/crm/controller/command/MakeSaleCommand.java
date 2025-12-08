@@ -25,6 +25,7 @@ public class MakeSaleCommand implements CRMCommand {
         int customerId = Integer.parseInt(scanner.nextLine());
 
         Customer saleCustomer = customerRepository.getCustomerFromId(customerId);
+        saleCustomer.addInteraction(EventType.SALE_MADE, "Sale completed");
         customerSales.push(saleCustomer);
         System.out.println("Made sale with " + saleCustomer.getName());
     }

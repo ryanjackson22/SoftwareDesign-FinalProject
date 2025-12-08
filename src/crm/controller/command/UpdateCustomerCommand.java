@@ -39,17 +39,20 @@ public class UpdateCustomerCommand implements CRMCommand {
                 System.out.print("Full Name: ");
                 String fullName = scanner.nextLine();
                 customerToUpdate.setName(fullName);
+                customerToUpdate.addInteraction(EventType.CUSTOMER_UPDATED, "Name updated to: " + fullName);
                 break;
             default:
             case "2":
                 System.out.print("Email Address: ");
                 String email = scanner.nextLine();
                 customerToUpdate.setEmail(email);
+                customerToUpdate.addInteraction(EventType.CUSTOMER_UPDATED, "Email updated to: " + email);
                 break;
             case "3":
                 System.out.print("Phone Number: ");
                 String phone = scanner.nextLine();
                 customerToUpdate.setPhone(phone);
+                customerToUpdate.addInteraction(EventType.CUSTOMER_UPDATED, "Phone updated to: " + phone);
                 break;
         }
 
