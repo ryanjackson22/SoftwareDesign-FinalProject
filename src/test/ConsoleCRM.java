@@ -1,6 +1,8 @@
 package test;
 
 import crm.controller.CRMController;
+import crm.observer.FileLogger;
+import crm.observer.SalesLogger;
 import customer.*;
 import crm.controller.command.*;
 import repository.CustomerRepository;
@@ -22,6 +24,12 @@ public class ConsoleCRM {
         customerRepository.createCustomer(new LostCustomer("Old Man Jenkins", "jenkins@aol.com", "321-654-0987"));
 
         CRMController crm = new CRMController();
+
+        // Register loggers
+        FileLogger fileLogger = new FileLogger("crm_activity.log");
+        SalesLogger salesLogger = new SalesLogger("sales.log");
+        crm.addObserver(fileLogger);
+        crm.addObserver(salesLogger);
 
         CRMCommand createCustomerCommand = new CreateCustomerCommand(customerRepository);
         CRMCommand updateCustomerCommand = new UpdateCustomerCommand(customerRepository);
