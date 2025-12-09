@@ -2,6 +2,7 @@ package crm.controller;
 
 import crm.controller.command.CRMCommand;
 import crm.observer.CRMObserver;
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class CRMController {
 
         commandHistory.push(command);
         command.execute();
-        notifyObservers(command.getEventType());
+        notifyObservers(new CRMEvent(command.getEventType()));
     }
 
     public void undoCommand() {
         if (commandHistory.isEmpty()) { return; }
 
         commandHistory.pop().undo();
-        notifyObservers(EventType.COMMAND_UNDONE);
+        notifyObservers(new CRMEvent(EventType.COMMAND_UNDONE));
     }
 
     public void addObserver(CRMObserver observer) {
@@ -50,7 +51,7 @@ public class CRMController {
         observers.remove(observer);
     }
 
-    public void notifyObservers(EventType eventType) {
+    public void notifyObservers(CRMEvent eventType) {
         for (CRMObserver observer : observers) {
             observer.onEvent(eventType);
         }

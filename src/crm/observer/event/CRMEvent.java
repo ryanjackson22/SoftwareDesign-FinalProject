@@ -6,9 +6,9 @@ public class CRMEvent {
     private final EventType eventType;
     private final Date timestamp;
 
-    public CRMEvent(EventType eventType, Date timestamp) {
+    public CRMEvent(EventType eventType) {
         this.eventType = eventType;
-        this.timestamp = timestamp;
+        this.timestamp = new Date();
     }
 
     public EventType getEventType() {

@@ -1,5 +1,6 @@
 package crm.observer;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 
 import java.io.FileWriter;
@@ -15,6 +16,11 @@ public class FileLogger implements CRMObserver {
     @Override
     public void onEvent(EventType eventType) {
         writeToFile(eventType.toString());
+    }
+
+    @Override
+    public void onEvent(CRMEvent crmEvent) {
+        writeToFile(crmEvent.toString());
     }
 
     public void writeToFile(String contents) {

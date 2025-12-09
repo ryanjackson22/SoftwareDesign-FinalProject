@@ -23,25 +23,7 @@ public class ConsoleCRM {
         customerRepository.createCustomer(new VIPCustomer("Big Tim", "bigtim123@hotmail.com", "123-456-7890"));
         customerRepository.createCustomer(new LostCustomer("Old Man Jenkins", "jenkins@aol.com", "321-654-0987"));
 
-        CRMController crm = new CRMController();
-
-        // Register loggers
-        FileLogger fileLogger = new FileLogger("crm_activity.log");
-        SalesLogger salesLogger = new SalesLogger("sales.log");
-        crm.addObserver(fileLogger);
-        crm.addObserver(salesLogger);
-
-        CRMCommand createCustomerCommand = new CreateCustomerCommand(customerRepository);
-        CRMCommand updateCustomerCommand = new UpdateCustomerCommand(customerRepository);
-        CRMCommand deleteCustomerCommand = new DeleteCustomerCommand(customerRepository);
-        CRMCommand makeSaleCommand = new MakeSaleCommand(customerRepository);
-        CRMCommand contactCustomerCommand = new ContactCustomerCommand(customerRepository);
-
-        crm.addCommand(createCustomerCommand);
-        crm.addCommand(updateCustomerCommand);
-        crm.addCommand(deleteCustomerCommand);
-        crm.addCommand(makeSaleCommand);
-        crm.addCommand(contactCustomerCommand);
+        CRMController crm = getCrmController(customerRepository);
 
         while (true) {
             System.out.println("========= CRM Commands ===========");
@@ -74,6 +56,29 @@ public class ConsoleCRM {
         }
 
         scanner.close();
+    }
+
+    private static CRMController getCrmController(CustomerRepository customerRepository) {
+        CRMController crm = new CRMController();
+
+        // Register loggers
+        FileLogger fileLogger = new FileLogger("crm_activity.log");
+        SalesLogger salesLogger = new SalesLogger("sales.log");
+        crm.addObserver(fileLogger);
+        crm.addObserver(salesLogger);
+
+        CRMCommand createCustomerCommand = new CreateCustomerCommand(customerRepository);
+        CRMCommand updateCustomerCommand = new UpdateCustomerCommand(customerRepository);
+        CRMCommand deleteCustomerCommand = new DeleteCustomerCommand(customerRepository);
+        CRMCommand makeSaleCommand = new MakeSaleCommand(customerRepository);
+        CRMCommand contactCustomerCommand = new ContactCustomerCommand(customerRepository);
+
+        crm.addCommand(createCustomerCommand);
+        crm.addCommand(updateCustomerCommand);
+        crm.addCommand(deleteCustomerCommand);
+        crm.addCommand(makeSaleCommand);
+        crm.addCommand(contactCustomerCommand);
+        return crm;
     }
 
     public static void clear() {

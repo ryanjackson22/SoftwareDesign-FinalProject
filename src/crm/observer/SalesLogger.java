@@ -1,12 +1,13 @@
 package crm.observer;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class SalesLogger implements CRMObserver {
-    private String filePath;
+    private final String filePath;
 
     public SalesLogger(String filePath) {
         this.filePath = filePath;
@@ -19,6 +20,11 @@ public class SalesLogger implements CRMObserver {
         }
 
         writeToFile(eventType.toString());
+    }
+
+    @Override
+    public void onEvent(CRMEvent crmEvent) {
+        writeToFile(crmEvent.toString());
     }
 
     public void writeToFile(String contents) {
