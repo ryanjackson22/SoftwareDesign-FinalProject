@@ -31,9 +31,10 @@ class CRMControllerTest {
         }
 
         @Override
-        public void execute() {
+        public CRMEvent execute() {
             executed = true;
             executeCount++;
+            return new CRMEvent(eventType);
         }
 
         @Override

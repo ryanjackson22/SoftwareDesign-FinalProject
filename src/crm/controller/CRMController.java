@@ -32,8 +32,7 @@ public class CRMController {
         CRMCommand command = commands.get(slot);
 
         commandHistory.push(command);
-        command.execute();
-        notifyObservers(new CRMEvent(command.getEventType()));
+        notifyObservers(command.execute());
     }
 
     public void undoCommand() {

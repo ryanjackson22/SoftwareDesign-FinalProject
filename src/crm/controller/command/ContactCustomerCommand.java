@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import repository.CustomerRepository;
@@ -8,18 +9,17 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class ContactCustomerCommand implements CRMCommand {
-    private final String name = "Contact Customer";
     private final EventType eventType = EventType.NOTIFICATION_SENT;
 
     private final CustomerRepository customerRepository;
-    private Stack<Integer> contactedCustomerIds = new Stack<>();
+    private final Stack<Integer> contactedCustomerIds = new Stack<>();
 
     public ContactCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
 
         // Get customer
@@ -30,7 +30,7 @@ public class ContactCustomerCommand implements CRMCommand {
 
         if (customer == null) {
             System.out.println("Customer not found!");
-            return;
+            return new CRMEvent(eventType);
         }
 
         System.out.println("Contacting: " + customer.getName());
@@ -52,6 +52,10 @@ public class ContactCustomerCommand implements CRMCommand {
         contactedCustomerIds.push(customerId);
 
         System.out.println("\nNotification sent successfully!");
+
+        // Return detailed event with customer ID and contact method
+        String contactMethod = customer.getPreferredContactMethod().getClass().getSimpleName();
+        return new CRMEvent(eventType, customerId, "Contact Method: " + contactMethod);
     }
 
     @Override
@@ -62,12 +66,12 @@ public class ContactCustomerCommand implements CRMCommand {
         }
 
         contactedCustomerIds.pop();
-        System.out.println("Note: Notification already sent - cannot be recalled");
+        System.out.println("Note: Notification already sent - cannot be undone");
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Contact Customer";
     }
 
     @Override

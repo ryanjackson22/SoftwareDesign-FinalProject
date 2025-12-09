@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import customer.Interaction;
@@ -9,8 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ViewCustomerHistoryCommand implements CRMCommand {
-    private final String name = "View Customer History";
-    private final EventType eventType = EventType.NO_EVENT;
+    private final EventType eventType = EventType.VIEW_HISTORY;
 
     private final CustomerRepository customerRepository;
 
@@ -19,7 +19,7 @@ public class ViewCustomerHistoryCommand implements CRMCommand {
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Customer Id: ");
         int customerId = Integer.parseInt(scanner.nextLine());
@@ -28,7 +28,7 @@ public class ViewCustomerHistoryCommand implements CRMCommand {
 
         if (customer == null) {
             System.out.println("Customer not found!");
-            return;
+            return new CRMEvent(eventType);
         }
 
         System.out.println("\n========================================");
@@ -52,6 +52,8 @@ public class ViewCustomerHistoryCommand implements CRMCommand {
 
         System.out.println("\nPress enter to continue...");
         scanner.nextLine();
+
+        return new CRMEvent(eventType, customerId);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ViewCustomerHistoryCommand implements CRMCommand {
 
     @Override
     public String getName() {
-        return name;
+        return "View Customer History";
     }
 
     @Override

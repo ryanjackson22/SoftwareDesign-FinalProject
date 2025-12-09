@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import repository.CustomerRepository;
@@ -19,7 +20,7 @@ public class MakeSaleCommand implements CRMCommand {
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Customer Id: ");
         int customerId = Integer.parseInt(scanner.nextLine());
@@ -27,13 +28,15 @@ public class MakeSaleCommand implements CRMCommand {
         Customer saleCustomer = customerRepository.getCustomerFromId(customerId);
         saleCustomer.addInteraction(EventType.SALE_MADE, "Sale completed");
         customerSales.push(saleCustomer);
-        System.out.println("Made sale with " + saleCustomer.getName());
+        System.out.printf("Sale with %s made!\n", saleCustomer.getName());
+
+        return new CRMEvent(eventType, customerId, "Sale completed");
     }
 
     @Override
     public void undo() {
         Customer saleCustomer = customerSales.pop();
-        System.out.println("Unmade sale with " + saleCustomer.getName());
+        System.out.printf("Sale with %s successfully undone!\n", saleCustomer.getName());
     }
 
     @Override

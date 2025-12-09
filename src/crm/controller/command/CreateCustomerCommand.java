@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import customer.LeadCustomer;
@@ -22,7 +23,7 @@ public class CreateCustomerCommand implements CRMCommand {
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Customer Type: ");
         System.out.println("1. Lead Customer");
@@ -43,27 +44,36 @@ public class CreateCustomerCommand implements CRMCommand {
         String phone = scanner.nextLine();
 
         Customer newCustomer;
+        String customerTypeStr;
         switch (customerType) {
             case "1":
                 newCustomer = new LeadCustomer(fullName, email, phone);
+                customerTypeStr = "Lead";
                 break;
             default:
             case "2":
                 newCustomer = new RegularCustomer(fullName, email, phone);
+                customerTypeStr = "Regular";
                 break;
             case "3":
                 newCustomer = new VIPCustomer(fullName, email, phone);
+                customerTypeStr = "VIP";
                 break;
         }
 
         newCustomer.addInteraction(EventType.CUSTOMER_CREATED, "Customer record created");
         createdCustomers.push(newCustomer);
         customerRepository.createCustomer(newCustomer);
+
+        System.out.printf("Customer %d created successfully!\n", newCustomer.getId());
+
+        return new CRMEvent(eventType, newCustomer.getId(), "Type: " + customerTypeStr);
     }
 
     @Override
     public void undo() {
         customerRepository.deleteCustomer(createdCustomers.pop());
+        System.out.printf("Customer %d creation successfully undone!\n", createdCustomers.pop().getId());
     }
 
     @Override

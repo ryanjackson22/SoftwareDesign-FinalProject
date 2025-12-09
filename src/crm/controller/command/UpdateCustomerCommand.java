@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import repository.CustomerRepository;
@@ -19,7 +20,7 @@ public class UpdateCustomerCommand implements CRMCommand {
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Customer Id: ");
         int customerId = Integer.parseInt(scanner.nextLine());
@@ -34,12 +35,14 @@ public class UpdateCustomerCommand implements CRMCommand {
         System.out.print("Your Choice: ");
         String toChange = scanner.nextLine();
 
+        String updateInfo;
         switch (toChange) {
             case "1":
                 System.out.print("Full Name: ");
                 String fullName = scanner.nextLine();
                 customerToUpdate.setName(fullName);
                 customerToUpdate.addInteraction(EventType.CUSTOMER_UPDATED, "Name updated to: " + fullName);
+                updateInfo = "Name updated";
                 break;
             default:
             case "2":
@@ -47,22 +50,28 @@ public class UpdateCustomerCommand implements CRMCommand {
                 String email = scanner.nextLine();
                 customerToUpdate.setEmail(email);
                 customerToUpdate.addInteraction(EventType.CUSTOMER_UPDATED, "Email updated to: " + email);
+                updateInfo = "Email updated";
                 break;
             case "3":
                 System.out.print("Phone Number: ");
                 String phone = scanner.nextLine();
                 customerToUpdate.setPhone(phone);
                 customerToUpdate.addInteraction(EventType.CUSTOMER_UPDATED, "Phone updated to: " + phone);
+                updateInfo = "Phone updated";
                 break;
         }
 
         updatedCustomers.push(customerToUpdate);
         customerRepository.updateCustomer(customerToUpdate);
+        System.out.printf("Customer %d successfully updated!\n", customerToUpdate.getId());
+
+        return new CRMEvent(eventType, customerId, updateInfo);
     }
 
     @Override
     public void undo() {
         Customer updatedCustomer = updatedCustomers.pop();
+        // TODO add undo functionality
     }
 
     @Override
