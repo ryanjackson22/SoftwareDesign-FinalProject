@@ -44,6 +44,10 @@ public class ContactCustomerCommand implements CRMCommand {
         // Send notification using the Strategy pattern
         customer.contact(message);
 
+        // Record interaction
+        customer.addInteraction(EventType.NOTIFICATION_SENT,
+            "Contacted via " + customer.getPreferredContactMethod() + " with message: " + message);
+
         // Track for undo
         contactedCustomerIds.push(customerId);
 

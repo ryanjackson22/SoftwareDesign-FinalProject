@@ -8,4 +8,9 @@ public class EmailNotification implements NotificationStrategy {
     public void send(Customer customer, String message) {
         System.out.println("Sent: '" + message + "' to " + customer.getEmail());
     }
+
+    @Override
+    public String toString() {
+        return "Email";
+    }
 }

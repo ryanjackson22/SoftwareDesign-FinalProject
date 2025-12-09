@@ -72,12 +72,14 @@ public class ConsoleCRM {
         CRMCommand deleteCustomerCommand = new DeleteCustomerCommand(customerRepository);
         CRMCommand makeSaleCommand = new MakeSaleCommand(customerRepository);
         CRMCommand contactCustomerCommand = new ContactCustomerCommand(customerRepository);
+        CRMCommand viewCustomerHistoryCommand = new ViewCustomerHistoryCommand(customerRepository);
 
         crm.addCommand(createCustomerCommand);
         crm.addCommand(updateCustomerCommand);
         crm.addCommand(deleteCustomerCommand);
         crm.addCommand(makeSaleCommand);
         crm.addCommand(contactCustomerCommand);
+        crm.addCommand(viewCustomerHistoryCommand);
         return crm;
     }
 

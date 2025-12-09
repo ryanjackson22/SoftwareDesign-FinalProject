@@ -7,4 +7,9 @@ public class SMSNotification implements NotificationStrategy {
     public void send(Customer customer, String message) {
         System.out.println("Sent: '" + message + "' to " + customer.getPhone());
     }
+
+    @Override
+    public String toString() {
+        return "SMS";
+    }
 }

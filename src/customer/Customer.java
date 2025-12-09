@@ -1,9 +1,12 @@
 package customer;
 
+import crm.observer.event.EventType;
 import notification.NotificationStrategy;
 import notification.SMSNotification;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public abstract class Customer {
     public static int currentID = 64000;
@@ -14,6 +17,7 @@ public abstract class Customer {
     private String phone;
     private Date lastContact;
     private NotificationStrategy preferredContactMethod;
+    private List<Interaction> interactionHistory;
 
     public abstract String toString();
 
@@ -24,6 +28,7 @@ public abstract class Customer {
         this.phone = phone;
         this.lastContact = null;
         this.preferredContactMethod = new SMSNotification();
+        this.interactionHistory = new ArrayList<>();
     }
 
     public void contact(String message) {
@@ -77,5 +82,13 @@ public abstract class Customer {
     private int assignCustomerId() {
         currentID++;
         return currentID;
+    }
+
+    public void addInteraction(EventType eventType, String details) {
+        interactionHistory.add(new Interaction(eventType, details));
+    }
+
+    public List<Interaction> getInteractionHistory() {
+        return new ArrayList<>(interactionHistory);
     }
 }

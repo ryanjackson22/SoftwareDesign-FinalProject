@@ -56,6 +56,7 @@ public class CreateCustomerCommand implements CRMCommand {
                 break;
         }
 
+        newCustomer.addInteraction(EventType.CUSTOMER_CREATED, "Customer record created");
         createdCustomers.push(newCustomer);
         customerRepository.createCustomer(newCustomer);
     }

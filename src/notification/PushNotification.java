@@ -7,4 +7,9 @@ public class PushNotification implements NotificationStrategy {
     public void send(Customer customer, String message) {
         System.out.println("Sent Push Notification: '" + message + "' to " + customer.getPhone());
     }
+
+    @Override
+    public String toString() {
+        return "Push Notification";
+    }
 }
