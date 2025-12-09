@@ -6,7 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileLogger implements CRMObserver {
-    private String filePath;
+    private final String filePath;
+
+    public FileLogger(String filePath) {
+        this.filePath = filePath;
+    }
 
     @Override
     public void onEvent(EventType eventType) {
@@ -15,8 +19,8 @@ public class FileLogger implements CRMObserver {
 
     public void writeToFile(String contents) {
         try {
-            FileWriter logFileWriter = new FileWriter(this.filePath);
-            logFileWriter.write(contents);
+            FileWriter logFileWriter = new FileWriter(this.filePath, true);
+            logFileWriter.write(contents + "\n");
             logFileWriter.close();
         } catch (IOException e) {
             System.out.println("Unable to write to log file: " + this.filePath);
