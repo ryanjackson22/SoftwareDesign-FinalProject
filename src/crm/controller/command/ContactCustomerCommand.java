@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import repository.CustomerRepository;
@@ -18,7 +19,7 @@ public class ContactCustomerCommand implements CRMCommand {
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
 
         // Get customer
@@ -29,7 +30,7 @@ public class ContactCustomerCommand implements CRMCommand {
 
         if (customer == null) {
             System.out.println("Customer not found!");
-            return;
+            return new CRMEvent(eventType);
         }
 
         System.out.println("Contacting: " + customer.getName());
@@ -51,6 +52,10 @@ public class ContactCustomerCommand implements CRMCommand {
         contactedCustomerIds.push(customerId);
 
         System.out.println("\nNotification sent successfully!");
+
+        // Return detailed event with customer ID and contact method
+        String contactMethod = customer.getPreferredContactMethod().getClass().getSimpleName();
+        return new CRMEvent(eventType, customerId, "Contact Method: " + contactMethod);
     }
 
     @Override

@@ -202,4 +202,133 @@ class CustomerTest {
         }
         return -1;
     }
+
+    // ==================== Interaction History Tests ====================
+
+    @Test
+    void testAddInteraction() {
+        // Arrange
+        Customer customer = new RegularCustomer("Test User", "test@example.com", "555-0000");
+
+        // Act
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "Customer created");
+
+        // Assert
+        assertEquals(1, customer.getInteractionHistory().size());
+    }
+
+    @Test
+    void testGetInteractionHistoryReturnsEmptyListInitially() {
+        // Arrange
+        Customer customer = new RegularCustomer("Test User", "test@example.com", "555-0000");
+
+        // Act
+        java.util.List<Interaction> history = customer.getInteractionHistory();
+
+        // Assert
+        assertNotNull(history, "History should not be null");
+        assertEquals(0, history.size(), "New customer should have empty history");
+    }
+
+    @Test
+    void testAddMultipleInteractions() {
+        // Arrange
+        Customer customer = new RegularCustomer("Test User", "test@example.com", "555-0000");
+
+        // Act
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "Created");
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_UPDATED, "Updated email");
+        customer.addInteraction(crm.observer.event.EventType.NOTIFICATION_SENT, "Sent SMS");
+        customer.addInteraction(crm.observer.event.EventType.SALE_MADE, "Made sale");
+
+        // Assert
+        assertEquals(4, customer.getInteractionHistory().size());
+    }
+
+    @Test
+    void testInteractionHistoryMaintainsOrder() {
+        // Arrange
+        Customer customer = new RegularCustomer("Test User", "test@example.com", "555-0000");
+
+        // Act
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "First");
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_UPDATED, "Second");
+        customer.addInteraction(crm.observer.event.EventType.SALE_MADE, "Third");
+
+        // Assert
+        java.util.List<Interaction> history = customer.getInteractionHistory();
+        assertEquals("First", history.get(0).getDetails());
+        assertEquals("Second", history.get(1).getDetails());
+        assertEquals("Third", history.get(2).getDetails());
+    }
+
+    @Test
+    void testGetInteractionHistoryReturnsDefensiveCopy() {
+        // Arrange
+        Customer customer = new RegularCustomer("Test User", "test@example.com", "555-0000");
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "Original");
+
+        // Act
+        java.util.List<Interaction> history1 = customer.getInteractionHistory();
+        int originalSize = history1.size();
+
+        // Try to modify the returned list
+        history1.clear();
+
+        // Assert - original history should be unchanged
+        java.util.List<Interaction> history2 = customer.getInteractionHistory();
+        assertEquals(originalSize, history2.size(),
+                "Modifying returned list should not affect internal history");
+    }
+
+    @Test
+    void testInteractionHistoryWithDifferentEventTypes() {
+        // Arrange
+        Customer customer = new VIPCustomer("VIP User", "vip@example.com", "555-1111");
+
+        // Act
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "Created");
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_UPDATED, "Name changed");
+        customer.addInteraction(crm.observer.event.EventType.NOTIFICATION_SENT, "Email sent");
+        customer.addInteraction(crm.observer.event.EventType.SALE_MADE, "Product sold");
+
+        // Assert
+        java.util.List<Interaction> history = customer.getInteractionHistory();
+        assertEquals(crm.observer.event.EventType.CUSTOMER_CREATED, history.get(0).getEventType());
+        assertEquals(crm.observer.event.EventType.CUSTOMER_UPDATED, history.get(1).getEventType());
+        assertEquals(crm.observer.event.EventType.NOTIFICATION_SENT, history.get(2).getEventType());
+        assertEquals(crm.observer.event.EventType.SALE_MADE, history.get(3).getEventType());
+    }
+
+    @Test
+    void testInteractionDetailsAreStored() {
+        // Arrange
+        Customer customer = new LeadCustomer("Lead User", "lead@example.com", "555-2222");
+        String details = "Updated email to: newemail@example.com";
+
+        // Act
+        customer.addInteraction(crm.observer.event.EventType.CUSTOMER_UPDATED, details);
+
+        // Assert
+        java.util.List<Interaction> history = customer.getInteractionHistory();
+        assertEquals(details, history.get(0).getDetails());
+    }
+
+    @Test
+    void testMultipleCustomersHaveIndependentHistories() {
+        // Arrange
+        Customer customer1 = new RegularCustomer("User 1", "user1@example.com", "555-0001");
+        Customer customer2 = new RegularCustomer("User 2", "user2@example.com", "555-0002");
+
+        // Act
+        customer1.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "Customer 1 created");
+        customer2.addInteraction(crm.observer.event.EventType.CUSTOMER_CREATED, "Customer 2 created");
+        customer2.addInteraction(crm.observer.event.EventType.SALE_MADE, "Customer 2 sale");
+
+        // Assert
+        assertEquals(1, customer1.getInteractionHistory().size());
+        assertEquals(2, customer2.getInteractionHistory().size());
+        assertEquals("Customer 1 created", customer1.getInteractionHistory().get(0).getDetails());
+        assertEquals("Customer 2 created", customer2.getInteractionHistory().get(0).getDetails());
+    }
 }

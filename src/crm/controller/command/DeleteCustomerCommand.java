@@ -1,5 +1,6 @@
 package crm.controller.command;
 
+import crm.observer.event.CRMEvent;
 import crm.observer.event.EventType;
 import customer.Customer;
 import repository.CustomerRepository;
@@ -19,7 +20,7 @@ public class DeleteCustomerCommand implements CRMCommand {
     }
 
     @Override
-    public void execute() {
+    public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Customer Id: ");
         int customerId = Integer.parseInt(scanner.nextLine());
@@ -30,6 +31,8 @@ public class DeleteCustomerCommand implements CRMCommand {
         customerRepository.deleteCustomer(customerToDelete);
 
         System.out.printf("Customer %d deleted successfully!\n", customerId);
+
+        return new CRMEvent(eventType, customerId, "Customer deleted");
     }
 
     @Override
