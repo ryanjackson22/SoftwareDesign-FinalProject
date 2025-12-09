@@ -59,11 +59,14 @@ public class CreateCustomerCommand implements CRMCommand {
         newCustomer.addInteraction(EventType.CUSTOMER_CREATED, "Customer record created");
         createdCustomers.push(newCustomer);
         customerRepository.createCustomer(newCustomer);
+
+        System.out.printf("Customer %d created successfully!\n", newCustomer.getId());
     }
 
     @Override
     public void undo() {
         customerRepository.deleteCustomer(createdCustomers.pop());
+        System.out.printf("Customer %d creation successfully undone!\n", createdCustomers.pop().getId());
     }
 
     @Override

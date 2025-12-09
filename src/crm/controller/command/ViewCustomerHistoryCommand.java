@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ViewCustomerHistoryCommand implements CRMCommand {
-    private final String name = "View Customer History";
     private final EventType eventType = EventType.NO_EVENT;
 
     private final CustomerRepository customerRepository;
@@ -61,7 +60,7 @@ public class ViewCustomerHistoryCommand implements CRMCommand {
 
     @Override
     public String getName() {
-        return name;
+        return "View Customer History";
     }
 
     @Override

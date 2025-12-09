@@ -58,11 +58,13 @@ public class UpdateCustomerCommand implements CRMCommand {
 
         updatedCustomers.push(customerToUpdate);
         customerRepository.updateCustomer(customerToUpdate);
+        System.out.printf("Customer %d successfully updated!\n", customerToUpdate.getId());
     }
 
     @Override
     public void undo() {
         Customer updatedCustomer = updatedCustomers.pop();
+        // TODO add undo functionality
     }
 
     @Override

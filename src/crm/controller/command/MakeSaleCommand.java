@@ -27,13 +27,13 @@ public class MakeSaleCommand implements CRMCommand {
         Customer saleCustomer = customerRepository.getCustomerFromId(customerId);
         saleCustomer.addInteraction(EventType.SALE_MADE, "Sale completed");
         customerSales.push(saleCustomer);
-        System.out.println("Made sale with " + saleCustomer.getName());
+        System.out.printf("Sale with %s made!\n", saleCustomer.getName());
     }
 
     @Override
     public void undo() {
         Customer saleCustomer = customerSales.pop();
-        System.out.println("Unmade sale with " + saleCustomer.getName());
+        System.out.printf("Sale with %s successfully undone!\n", saleCustomer.getName());
     }
 
     @Override

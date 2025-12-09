@@ -28,11 +28,14 @@ public class DeleteCustomerCommand implements CRMCommand {
 
         deletedCustomers.push(customerToDelete);
         customerRepository.deleteCustomer(customerToDelete);
+
+        System.out.printf("Customer %d deleted successfully!\n", customerId);
     }
 
     @Override
     public void undo() {
         customerRepository.createCustomer(deletedCustomers.pop());
+        System.out.printf("Customer %d deletion successfully undone!\n", deletedCustomers.pop().getId());
     }
 
     @Override

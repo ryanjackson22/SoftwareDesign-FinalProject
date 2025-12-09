@@ -8,11 +8,10 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class ContactCustomerCommand implements CRMCommand {
-    private final String name = "Contact Customer";
     private final EventType eventType = EventType.NOTIFICATION_SENT;
 
     private final CustomerRepository customerRepository;
-    private Stack<Integer> contactedCustomerIds = new Stack<>();
+    private final Stack<Integer> contactedCustomerIds = new Stack<>();
 
     public ContactCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -62,12 +61,12 @@ public class ContactCustomerCommand implements CRMCommand {
         }
 
         contactedCustomerIds.pop();
-        System.out.println("Note: Notification already sent - cannot be recalled");
+        System.out.println("Note: Notification already sent - cannot be undone");
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Contact Customer";
     }
 
     @Override
