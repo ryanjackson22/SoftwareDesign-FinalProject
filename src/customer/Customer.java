@@ -17,7 +17,7 @@ public abstract class Customer {
     private String phone;
     private Date lastContact;
     private NotificationStrategy preferredContactMethod;
-    private List<Interaction> interactionHistory;
+    private final List<Interaction> interactionHistory;
 
     public abstract String toString();
 

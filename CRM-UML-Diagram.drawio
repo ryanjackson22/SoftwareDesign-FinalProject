@@ -1,0 +1,447 @@
+<mxfile host="app.diagrams.net" modified="2025-12-09T00:00:00.000Z" agent="Claude Code" version="22.0.0">
+  <diagram name="CRM System UML" id="uml-diagram">
+    <mxGraphModel dx="2000" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="2000">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Package: crm.observer.event -->
+        <mxCell id="pkg-event" value="crm.observer.event" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="400" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- EventType Enum -->
+        <mxCell id="EventType" value="&lt;&lt;enumeration&gt;&gt;&#xa;EventType" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-event">
+          <mxGeometry x="20" y="50" width="170" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="EventType-fields" value="CUSTOMER_CREATED&#xa;CUSTOMER_UPDATED&#xa;CUSTOMER_DELETED&#xa;SALE_MADE&#xa;NOTIFICATION_SENT&#xa;COMMAND_UNDONE&#xa;VIEW_HISTORY&#xa;NO_EVENT&#xa;- eventTypeStr: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="EventType">
+          <mxGeometry y="40" width="170" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="EventType-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="EventType">
+          <mxGeometry y="200" width="170" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="EventType-methods" value="+ EventType(str: String)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="EventType">
+          <mxGeometry y="208" width="170" height="72" as="geometry" />
+        </mxCell>
+
+        <!-- CRMEvent Class -->
+        <mxCell id="CRMEvent" value="CRMEvent" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-event">
+          <mxGeometry x="210" y="50" width="180" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMEvent-fields" value="- eventType: EventType&#xa;- timestamp: Date&#xa;- customerId: Integer&#xa;- additionalInfo: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CRMEvent">
+          <mxGeometry y="26" width="180" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMEvent-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="CRMEvent">
+          <mxGeometry y="110" width="180" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMEvent-methods" value="+ CRMEvent(eventType)&#xa;+ CRMEvent(eventType,&#xa;  customerId)&#xa;+ CRMEvent(eventType,&#xa;  customerId, additionalInfo)&#xa;+ getEventType(): EventType&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CRMEvent">
+          <mxGeometry y="118" width="180" height="162" as="geometry" />
+        </mxCell>
+
+        <!-- Package: customer -->
+        <mxCell id="pkg-customer" value="customer" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="480" y="40" width="780" height="680" as="geometry" />
+        </mxCell>
+
+        <!-- Customer Abstract Class -->
+        <mxCell id="Customer" value="&lt;&lt;abstract&gt;&gt;&#xa;Customer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-customer">
+          <mxGeometry x="20" y="50" width="240" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer-fields" value="+ currentID: static int = 64000&#xa;- id: int&#xa;- name: String&#xa;- email: String&#xa;- phone: String&#xa;- lastContact: Date&#xa;- preferredContactMethod:&#xa;  NotificationStrategy&#xa;- interactionHistory:&#xa;  List&lt;Interaction&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Customer">
+          <mxGeometry y="40" width="240" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Customer">
+          <mxGeometry y="200" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer-methods" value="+ Customer(name, email, phone)&#xa;+ toString(): String {abstract}&#xa;+ contact(message: String): void&#xa;+ getId(): int&#xa;+ getName(): String&#xa;+ setName(name: String): void&#xa;+ getEmail(): String&#xa;+ setEmail(email: String): void&#xa;+ getPhone(): String&#xa;+ setPhone(phone: String): void&#xa;+ getLastContact(): Date&#xa;+ getPreferredContactMethod():&#xa;  NotificationStrategy&#xa;+ setPreferredContactMethod(&#xa;  strategy): void&#xa;+ addInteraction(eventType,&#xa;  details): void&#xa;+ getInteractionHistory():&#xa;  List&lt;Interaction&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Customer">
+          <mxGeometry y="208" width="240" height="252" as="geometry" />
+        </mxCell>
+
+        <!-- LeadCustomer Class -->
+        <mxCell id="LeadCustomer" value="LeadCustomer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-customer">
+          <mxGeometry x="280" y="50" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="LeadCustomer-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="LeadCustomer">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="LeadCustomer-methods" value="+ LeadCustomer(name,&#xa;  email, phone)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="LeadCustomer">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- RegularCustomer Class -->
+        <mxCell id="RegularCustomer" value="RegularCustomer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-customer">
+          <mxGeometry x="280" y="170" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="RegularCustomer-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="RegularCustomer">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="RegularCustomer-methods" value="+ RegularCustomer(name,&#xa;  email, phone)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="RegularCustomer">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- VIPCustomer Class -->
+        <mxCell id="VIPCustomer" value="VIPCustomer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-customer">
+          <mxGeometry x="280" y="290" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="VIPCustomer-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="VIPCustomer">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="VIPCustomer-methods" value="+ VIPCustomer(name,&#xa;  email, phone)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="VIPCustomer">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- LostCustomer Class -->
+        <mxCell id="LostCustomer" value="LostCustomer" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-customer">
+          <mxGeometry x="280" y="410" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="LostCustomer-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="LostCustomer">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="LostCustomer-methods" value="+ LostCustomer(name,&#xa;  email, phone)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="LostCustomer">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- Interaction Class -->
+        <mxCell id="Interaction" value="Interaction" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-customer">
+          <mxGeometry x="530" y="50" width="230" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Interaction-fields" value="- timestamp: LocalDateTime&#xa;- eventType: EventType&#xa;- details: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Interaction">
+          <mxGeometry y="26" width="230" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="Interaction-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Interaction">
+          <mxGeometry y="90" width="230" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="Interaction-methods" value="+ Interaction(eventType,&#xa;  details)&#xa;+ getTimestamp():&#xa;  LocalDateTime&#xa;+ getEventType(): EventType&#xa;+ getDetails(): String&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Interaction">
+          <mxGeometry y="98" width="230" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- Package: notification -->
+        <mxCell id="pkg-notification" value="notification" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="40" width="600" height="480" as="geometry" />
+        </mxCell>
+
+        <!-- NotificationStrategy Interface -->
+        <mxCell id="NotificationStrategy" value="&lt;&lt;interface&gt;&gt;&#xa;NotificationStrategy" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-notification">
+          <mxGeometry x="20" y="50" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="NotificationStrategy-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="NotificationStrategy">
+          <mxGeometry y="40" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="NotificationStrategy-methods" value="+ send(customer: Customer,&#xa;  message: String): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="NotificationStrategy">
+          <mxGeometry y="48" width="220" height="52" as="geometry" />
+        </mxCell>
+
+        <!-- EmailNotification Class -->
+        <mxCell id="EmailNotification" value="EmailNotification" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-notification">
+          <mxGeometry x="260" y="50" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="EmailNotification-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="EmailNotification">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="EmailNotification-methods" value="+ EmailNotification()&#xa;+ send(customer, message)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="EmailNotification">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- SMSNotification Class -->
+        <mxCell id="SMSNotification" value="SMSNotification" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-notification">
+          <mxGeometry x="260" y="170" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="SMSNotification-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="SMSNotification">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="SMSNotification-methods" value="+ SMSNotification()&#xa;+ send(customer, message)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="SMSNotification">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- PushNotification Class -->
+        <mxCell id="PushNotification" value="PushNotification" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-notification">
+          <mxGeometry x="260" y="290" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="PushNotification-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="PushNotification">
+          <mxGeometry y="26" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="PushNotification-methods" value="+ PushNotification()&#xa;+ send(customer, message)&#xa;+ toString(): String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PushNotification">
+          <mxGeometry y="34" width="220" height="66" as="geometry" />
+        </mxCell>
+
+        <!-- NotificationService Class -->
+        <mxCell id="NotificationService" value="NotificationService" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-notification">
+          <mxGeometry x="20" y="220" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="NotificationService-fields" value="- strategy:&#xa;  NotificationStrategy" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="NotificationService">
+          <mxGeometry y="26" width="220" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="NotificationService-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="NotificationService">
+          <mxGeometry y="70" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="NotificationService-methods" value="+ NotificationService()&#xa;+ setStrategy(strategy)&#xa;+ contactCustomer(&#xa;  customer, message)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="NotificationService">
+          <mxGeometry y="78" width="220" height="62" as="geometry" />
+        </mxCell>
+
+        <!-- Package: repository -->
+        <mxCell id="pkg-repository" value="repository" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="40" width="500" height="380" as="geometry" />
+        </mxCell>
+
+        <!-- CustomerRepository Interface -->
+        <mxCell id="CustomerRepository" value="&lt;&lt;interface&gt;&gt;&#xa;CustomerRepository" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-repository">
+          <mxGeometry x="20" y="50" width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="CustomerRepository-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="CustomerRepository">
+          <mxGeometry y="40" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="CustomerRepository-methods" value="+ createCustomer(&#xa;  customer: Customer)&#xa;+ updateCustomer(&#xa;  customer: Customer)&#xa;+ deleteCustomer(&#xa;  customer: Customer)&#xa;+ getCustomerFromId(&#xa;  id: int): Customer&#xa;+ getAllCustomers():&#xa;  List&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CustomerRepository">
+          <mxGeometry y="48" width="220" height="132" as="geometry" />
+        </mxCell>
+
+        <!-- InMemoryCustomerRepository Class -->
+        <mxCell id="InMemoryCustomerRepository" value="InMemoryCustomer&#xa;Repository" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-repository">
+          <mxGeometry x="260" y="50" width="220" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="InMemoryCustomerRepository-fields" value="- customers:&#xa;  ArrayList&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="InMemoryCustomerRepository">
+          <mxGeometry y="40" width="220" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="InMemoryCustomerRepository-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="InMemoryCustomerRepository">
+          <mxGeometry y="84" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="InMemoryCustomerRepository-methods" value="+ InMemoryCustomer&#xa;  Repository()&#xa;+ createCustomer(&#xa;  customer: Customer)&#xa;+ updateCustomer(&#xa;  customer: Customer)&#xa;+ deleteCustomer(&#xa;  customer: Customer)&#xa;+ getCustomerFromId(&#xa;  id: int): Customer&#xa;+ getAllCustomers():&#xa;  List&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="InMemoryCustomerRepository">
+          <mxGeometry y="92" width="220" height="188" as="geometry" />
+        </mxCell>
+
+        <!-- Package: crm.observer -->
+        <mxCell id="pkg-observer" value="crm.observer" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="460" width="720" height="360" as="geometry" />
+        </mxCell>
+
+        <!-- CRMObserver Interface -->
+        <mxCell id="CRMObserver" value="&lt;&lt;interface&gt;&gt;&#xa;CRMObserver" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-observer">
+          <mxGeometry x="20" y="50" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMObserver-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="CRMObserver">
+          <mxGeometry y="40" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMObserver-methods" value="+ onEvent(eventType:&#xa;  EventType): void&#xa;+ onEvent(crmEvent:&#xa;  CRMEvent): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CRMObserver">
+          <mxGeometry y="48" width="220" height="72" as="geometry" />
+        </mxCell>
+
+        <!-- FileLogger Class -->
+        <mxCell id="FileLogger" value="FileLogger" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-observer">
+          <mxGeometry x="260" y="50" width="220" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="FileLogger-fields" value="- filePath: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="FileLogger">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="FileLogger-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="FileLogger">
+          <mxGeometry y="52" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="FileLogger-methods" value="+ FileLogger(filePath)&#xa;+ onEvent(eventType)&#xa;+ onEvent(crmEvent)&#xa;+ writeToFile(contents)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="FileLogger">
+          <mxGeometry y="60" width="220" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- SalesLogger Class -->
+        <mxCell id="SalesLogger" value="SalesLogger" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-observer">
+          <mxGeometry x="490" y="50" width="220" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="SalesLogger-fields" value="- filePath: String" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="SalesLogger">
+          <mxGeometry y="26" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="SalesLogger-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="SalesLogger">
+          <mxGeometry y="52" width="220" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="SalesLogger-methods" value="+ SalesLogger(filePath)&#xa;+ onEvent(eventType)&#xa;+ onEvent(crmEvent)&#xa;+ writeToFile(contents)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="SalesLogger">
+          <mxGeometry y="60" width="220" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- Package: crm.controller.command -->
+        <mxCell id="pkg-command" value="crm.controller.command" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;" vertex="1" parent="1">
+          <mxGeometry x="800" y="760" width="1640" height="680" as="geometry" />
+        </mxCell>
+
+        <!-- CRMCommand Interface -->
+        <mxCell id="CRMCommand" value="&lt;&lt;interface&gt;&gt;&#xa;CRMCommand" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="20" y="50" width="200" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="CRMCommand">
+          <mxGeometry y="40" width="200" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMCommand-methods" value="+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType():&#xa;  EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CRMCommand">
+          <mxGeometry y="48" width="200" height="92" as="geometry" />
+        </mxCell>
+
+        <!-- CreateCustomerCommand Class -->
+        <mxCell id="CreateCustomerCommand" value="CreateCustomerCommand" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="240" y="50" width="240" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="CreateCustomerCommand-fields" value="- eventType: EventType&#xa;- customerRepository:&#xa;  CustomerRepository&#xa;- createdCustomers:&#xa;  Stack&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CreateCustomerCommand">
+          <mxGeometry y="26" width="240" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="CreateCustomerCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="CreateCustomerCommand">
+          <mxGeometry y="110" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="CreateCustomerCommand-methods" value="+ CreateCustomerCommand(&#xa;  repository)&#xa;+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType(): EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CreateCustomerCommand">
+          <mxGeometry y="118" width="240" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- DeleteCustomerCommand Class -->
+        <mxCell id="DeleteCustomerCommand" value="DeleteCustomerCommand" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="500" y="50" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="DeleteCustomerCommand-fields" value="- name: String&#xa;- eventType: EventType&#xa;- customerRepository:&#xa;  CustomerRepository&#xa;- deletedCustomers:&#xa;  Stack&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="DeleteCustomerCommand">
+          <mxGeometry y="26" width="240" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="DeleteCustomerCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="DeleteCustomerCommand">
+          <mxGeometry y="130" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="DeleteCustomerCommand-methods" value="+ DeleteCustomerCommand(&#xa;  repository)&#xa;+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType(): EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="DeleteCustomerCommand">
+          <mxGeometry y="138" width="240" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- UpdateCustomerCommand Class -->
+        <mxCell id="UpdateCustomerCommand" value="UpdateCustomerCommand" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="760" y="50" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="UpdateCustomerCommand-fields" value="- name: String&#xa;- eventType: EventType&#xa;- customerRepository:&#xa;  CustomerRepository&#xa;- updatedCustomers:&#xa;  Stack&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="UpdateCustomerCommand">
+          <mxGeometry y="26" width="240" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="UpdateCustomerCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="UpdateCustomerCommand">
+          <mxGeometry y="130" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="UpdateCustomerCommand-methods" value="+ UpdateCustomerCommand(&#xa;  repository)&#xa;+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType(): EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="UpdateCustomerCommand">
+          <mxGeometry y="138" width="240" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- ContactCustomerCommand Class -->
+        <mxCell id="ContactCustomerCommand" value="ContactCustomerCommand" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="1020" y="50" width="260" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ContactCustomerCommand-fields" value="- eventType: EventType&#xa;- customerRepository:&#xa;  CustomerRepository&#xa;- contactedCustomerIds:&#xa;  Stack&lt;Integer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ContactCustomerCommand">
+          <mxGeometry y="26" width="260" height="84" as="geometry" />
+        </mxCell>
+        <mxCell id="ContactCustomerCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ContactCustomerCommand">
+          <mxGeometry y="110" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ContactCustomerCommand-methods" value="+ ContactCustomerCommand(&#xa;  repository)&#xa;+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType(): EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ContactCustomerCommand">
+          <mxGeometry y="118" width="260" height="122" as="geometry" />
+        </mxCell>
+
+        <!-- MakeSaleCommand Class -->
+        <mxCell id="MakeSaleCommand" value="MakeSaleCommand" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="1300" y="50" width="240" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="MakeSaleCommand-fields" value="- name: String&#xa;- eventType: EventType&#xa;- customerRepository:&#xa;  CustomerRepository&#xa;- customerSales:&#xa;  Stack&lt;Customer&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="MakeSaleCommand">
+          <mxGeometry y="26" width="240" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="MakeSaleCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="MakeSaleCommand">
+          <mxGeometry y="130" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="MakeSaleCommand-methods" value="+ MakeSaleCommand(&#xa;  repository)&#xa;+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType(): EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="MakeSaleCommand">
+          <mxGeometry y="138" width="240" height="102" as="geometry" />
+        </mxCell>
+
+        <!-- ViewCustomerHistoryCommand Class -->
+        <mxCell id="ViewCustomerHistoryCommand" value="ViewCustomerHistory&#xa;Command" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="20" y="320" width="260" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ViewCustomerHistoryCommand-fields" value="- eventType: EventType&#xa;- customerRepository:&#xa;  CustomerRepository" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ViewCustomerHistoryCommand">
+          <mxGeometry y="40" width="260" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="ViewCustomerHistoryCommand-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ViewCustomerHistoryCommand">
+          <mxGeometry y="104" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ViewCustomerHistoryCommand-methods" value="+ ViewCustomerHistory&#xa;  Command(repository)&#xa;+ execute(): CRMEvent&#xa;+ undo(): void&#xa;+ getName(): String&#xa;+ getEventType(): EventType" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ViewCustomerHistoryCommand">
+          <mxGeometry y="112" width="260" height="88" as="geometry" />
+        </mxCell>
+
+        <!-- CRMController Class -->
+        <mxCell id="CRMController" value="CRMController" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" vertex="1" parent="pkg-command">
+          <mxGeometry x="320" y="320" width="260" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMController-fields" value="- commandHistory:&#xa;  Stack&lt;CRMCommand&gt;&#xa;- observers:&#xa;  List&lt;CRMObserver&gt;&#xa;- commands:&#xa;  List&lt;CRMCommand&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CRMController">
+          <mxGeometry y="26" width="260" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMController-line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="CRMController">
+          <mxGeometry y="130" width="260" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="CRMController-methods" value="+ CRMController()&#xa;+ addCommand(command)&#xa;+ getCommandListing():&#xa;  List&lt;String&gt;&#xa;+ executeCommand(slot: int)&#xa;+ undoCommand(): void&#xa;+ addObserver(observer)&#xa;+ removeObserver(observer)&#xa;+ notifyObservers(event)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="CRMController">
+          <mxGeometry y="138" width="260" height="142" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships -->
+
+        <!-- Inheritance: Customer subclasses -->
+        <mxCell id="edge-lead-customer" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LeadCustomer" target="Customer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-regular-customer" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="RegularCustomer" target="Customer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-vip-customer" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="VIPCustomer" target="Customer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-lost-customer" style="endArrow=block;endSize=16;endFill=0;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LostCustomer" target="Customer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Implementation: NotificationStrategy -->
+        <mxCell id="edge-email-notification" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="EmailNotification" target="NotificationStrategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-sms-notification" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="SMSNotification" target="NotificationStrategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-push-notification" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="PushNotification" target="NotificationStrategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Implementation: CustomerRepository -->
+        <mxCell id="edge-inmemory-repository" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="InMemoryCustomerRepository" target="CustomerRepository">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Implementation: CRMObserver -->
+        <mxCell id="edge-filelogger-observer" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FileLogger" target="CRMObserver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-saleslogger-observer" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="SalesLogger" target="CRMObserver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Implementation: CRMCommand implementations -->
+        <mxCell id="edge-create-command" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="CreateCustomerCommand" target="CRMCommand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-delete-command" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="DeleteCustomerCommand" target="CRMCommand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-update-command" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="UpdateCustomerCommand" target="CRMCommand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-contact-command" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ContactCustomerCommand" target="CRMCommand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-sale-command" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MakeSaleCommand" target="CRMCommand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-view-command" style="endArrow=block;dashed=1;endFill=0;endSize=12;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ViewCustomerHistoryCommand" target="CRMCommand">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Customer has NotificationStrategy -->
+        <mxCell id="edge-customer-notification" style="endArrow=diamond;endFill=0;endSize=16;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Customer" target="NotificationStrategy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Association: Customer has Interaction -->
+        <mxCell id="edge-customer-interaction" style="endArrow=diamond;endFill=0;endSize=16;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Customer" target="Interaction">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Dependency: CRMEvent uses EventType -->
+        <mxCell id="edge-event-eventtype" style="endArrow=open;endSize=12;dashed=1;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="CRMEvent" target="EventType">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
