@@ -263,7 +263,7 @@ class ContactCustomerCommandTest {
     @Test
     void testGetNameReturnsCorrectName() {
         // Act & Assert
-        assertEquals("Notification Sent", command.getName());
+        assertEquals("Send Notification", command.getName());
     }
 
     @Test
