@@ -70,7 +70,7 @@ public class ContactCustomerCommand implements CRMCommand {
 
     @Override
     public String getName() {
-        return EventType.NOTIFICATION_SENT.toString();
+        return "Send Notification";
     }
 
     @Override
