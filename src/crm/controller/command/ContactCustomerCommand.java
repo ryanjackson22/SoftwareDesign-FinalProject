@@ -22,8 +22,7 @@ public class ContactCustomerCommand implements CRMCommand {
     public CRMEvent execute() {
         Scanner scanner = new Scanner(System.in);
 
-        // Get customer
-        System.out.println("Enter Customer Id: ");
+        System.out.print("Enter Customer Id: ");
         int customerId = Integer.parseInt(scanner.nextLine());
 
         Customer customer = customerRepository.getCustomerFromId(customerId);
@@ -37,23 +36,17 @@ public class ContactCustomerCommand implements CRMCommand {
         System.out.println("Preferred Method: " + customer.getPreferredContactMethod().getClass().getSimpleName());
         System.out.println();
 
-        // Get message
         System.out.print("Enter message to send: ");
         String message = scanner.nextLine();
 
-        // Send notification using the Strategy pattern
         customer.contact(message);
 
-        // Record interaction
-        customer.addInteraction(EventType.NOTIFICATION_SENT,
-            "Contacted via " + customer.getPreferredContactMethod() + " with message: " + message);
+        customer.addInteraction(EventType.NOTIFICATION_SENT,"Contacted via " + customer.getPreferredContactMethod() + " with message: " + message);
 
-        // Track for undo
         contactedCustomerIds.push(customerId);
 
         System.out.println("\nNotification sent successfully!");
 
-        // Return detailed event with customer ID and contact method
         String contactMethod = customer.getPreferredContactMethod().getClass().getSimpleName();
         return new CRMEvent(eventType, customerId, "Contact Method: " + contactMethod);
     }
@@ -71,7 +64,7 @@ public class ContactCustomerCommand implements CRMCommand {
 
     @Override
     public String getName() {
-        return "Contact Customer";
+        return EventType.NOTIFICATION_SENT.toString();
     }
 
     @Override
