@@ -5,20 +5,17 @@ import java.util.Date;
 public class CRMEvent {
     private final EventType eventType;
     private final Date timestamp;
-    private final Integer customerId;      // Optional - for events involving a specific customer
-    private final String additionalInfo;   // Optional - flexible field for extra details
+    private final Integer customerId;
+    private final String additionalInfo;
 
-    // Constructor without additional data (backwards compatible)
     public CRMEvent(EventType eventType) {
         this(eventType, null, null);
     }
 
-    // Constructor with customer ID only
     public CRMEvent(EventType eventType, Integer customerId) {
         this(eventType, customerId, null);
     }
 
-    // Full constructor with all optional fields
     public CRMEvent(EventType eventType, Integer customerId, String additionalInfo) {
         this.eventType = eventType;
         this.timestamp = new Date();

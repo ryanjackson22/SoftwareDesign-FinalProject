@@ -9,11 +9,10 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class UpdateCustomerCommand implements CRMCommand {
-    private final String name = "Update Customer";
     private final EventType eventType = EventType.CUSTOMER_UPDATED;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> updatedCustomers = new Stack<>();
+    private final Stack<Customer> updatedCustomers = new Stack<>();
 
     public UpdateCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -71,12 +70,11 @@ public class UpdateCustomerCommand implements CRMCommand {
     @Override
     public void undo() {
         Customer updatedCustomer = updatedCustomers.pop();
-        // TODO add undo functionality
     }
 
     @Override
     public String getName() {
-        return name;
+        return "Update Customer";
     }
 
     @Override

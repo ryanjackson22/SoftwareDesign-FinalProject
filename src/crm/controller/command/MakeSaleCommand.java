@@ -9,11 +9,10 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class MakeSaleCommand implements CRMCommand {
-    private final String name = "Make Sale";
     private final EventType eventType = EventType.SALE_MADE;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> customerSales = new Stack<>();
+    private final Stack<Customer> customerSales = new Stack<>();
 
     public MakeSaleCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -41,7 +40,7 @@ public class MakeSaleCommand implements CRMCommand {
 
     @Override
     public String getName() {
-        return name;
+        return "Make Sale";
     }
 
     @Override

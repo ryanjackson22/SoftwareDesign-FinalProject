@@ -9,11 +9,10 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class DeleteCustomerCommand implements CRMCommand {
-    private final String name = "Delete Customer";
     private final EventType eventType = EventType.CUSTOMER_DELETED;
 
     private final CustomerRepository customerRepository;
-    private Stack<Customer> deletedCustomers = new Stack<>();
+    private final Stack<Customer> deletedCustomers = new Stack<>();
 
     public DeleteCustomerCommand(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -44,7 +43,7 @@ public class DeleteCustomerCommand implements CRMCommand {
 
     @Override
     public String getName() {
-        return name;
+        return "Delete Customer";
     }
 
     @Override
